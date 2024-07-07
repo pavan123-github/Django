@@ -28,7 +28,7 @@ def addstudent(request):
         trainer_id = request.POST['trainer']
         name = request.POST['sname']
         branch = request.POST['branch']
-        s = Student()
+        s = Student() #'helo'
         s.name = name
         s.branch = branch
         student = Student.objects.filter(trainer_id=trainer_id).exists()
