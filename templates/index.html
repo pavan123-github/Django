@@ -1,0 +1,79 @@
+<h1>Trainers</h1>
+<table border="1px solid" cellspacing='0'>
+    <thead>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Language</th>
+        <th>Update</th>
+				<th>Delete</th>
+    </thead>
+    <tbody>
+        {% for i in trainers %}
+        <tr>
+            <form action="updatetrainer" method="POST">
+							{% csrf_token %}
+							<td>{{i.id}}<input type="hidden" name='id' value="{{i.id}}"/></td>
+							<td><input type="text" name="tname" value="{{i.name}}"/></td>
+							<td><input type="text" name="lang" value="{{i.language}}"/></td>
+							<td><input type="submit" value="update"/></td>
+            </form>
+						<td><a href="deletetr?id={{i.id}}">Delete</td>
+        <tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Add Trainer</h4>
+<form action="addtrainer" method="post">
+    {% csrf_token %}
+    Name <input type="text" name="tname" placeholder="Trainer Name" />
+    Language <input type="text" name="lang" placeholder="Language Name" />
+    <input type="submit" value="AddTrainer" />
+</form>
+
+<h1>Students</h1>
+<table border="1px solid" cellspacing='0'>
+    <thead>
+        <th>Student Name</th>
+        <th>Accociate Trainer</th>
+        <th>Branch</th>
+				<td>Update</td>
+				<td>Delete</td>
+    </thead>
+    <tbody>
+        {% for i in students %}
+        <tr>
+					<form action="updatestudent" method="post">
+						{% csrf_token %}
+            <td><input type="text" name="sname" value="{{i.name}}"/></td>
+            <td>{{i.trainer}}<input type="hidden" name="tid" value="{{i.trainer_id}}"/></td>
+            <td><input type="text" name="branch" value="{{i.branch}}"/></td>
+						<td><input type="submit" value="update"/></td>
+					</form>
+					<td><a href="deletestudent?tid={{i.trainer_id}}">Delete</a></td>
+        <tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4>Add Student</h4>
+<form action="addstudent" method="post">
+    {% csrf_token %}
+    <select name="trainer">
+        <option>----Select Trainer----</option>
+        {% for i in trainers %}
+            <option value="{{i.id}}">{{i.name}}</option>
+        {% endfor %}
+    </select>
+    Name <input type="text" name="sname" placeholder="Student Name" />
+    Branch <input type="text" name="branch" placeholder="Branch Name" />
+    <input type="submit" value="AddStudent" />
+</form>
+
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            alert('{{message}}');
+        </script>
+    {% endfor %}
+{% endif %}
