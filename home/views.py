@@ -38,6 +38,7 @@ def addstudent(request):
         else:
             s.trainer = Trainer.objects.get(id=trainer_id)
             s.save()
+            send_email(request,'Student created',f'{name} Added successfully!',f'{name}')
             messages.info(request,'Student saved successfully!')
             return redirect('/')
     else:
